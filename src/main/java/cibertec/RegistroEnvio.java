@@ -16,10 +16,15 @@ public class RegistroEnvio {
         if (zonaService.esZonaRestringida(direccion)) {
             return "No se permiten envíos a esta zona";
         }
+        double tarifaFinal = calcularTarifaConRecargo(peso, distancia, tipoEnvio);
+        return "Tarifa con recargo: " + tarifaFinal;
+    }
+
+    private double calcularTarifaConRecargo(double peso, double distancia, String tipoEnvio) {
         double tarifa = tarificadorService.calcularTarifa(peso, distancia, tipoEnvio);
         if (peso > 10) {
             tarifa *= 1.2;
         }
-        return "Tarifa con recargo: " + tarifa;
+        return tarifa;
     }
 }
