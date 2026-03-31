@@ -13,7 +13,7 @@ public class RegistroEnvio {
 
     public String registrar(String codigoEnvio, double peso, double dimensiones, String direccion, String tipoEnvio,
             double distancia) {
-        if (zonaService.esZonaRestringida(direccion)) {
+        if (!esDireccionValida(direccion)) {
             return "No se permiten envíos a esta zona";
         }
         double tarifaFinal = calcularTarifaConRecargo(peso, distancia, tipoEnvio);
@@ -26,5 +26,9 @@ public class RegistroEnvio {
             tarifa *= 1.2;
         }
         return tarifa;
+    }
+
+    private boolean esDireccionValida(String direccion) {
+        return !zonaService.esZonaRestringida(direccion);
     }
 }
