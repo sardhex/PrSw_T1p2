@@ -13,6 +13,13 @@ public class RegistroEnvio {
 
     public String registrar(String codigoEnvio, double peso, double dimensiones, String direccion, String tipoEnvio,
             double distancia) {
-        return "";
+        if (zonaService.esZonaRestringida(direccion)) {
+            return "No se permiten envíos a esta zona";
+        }
+        double tarifa = tarificadorService.calcularTarifa(peso, distancia, tipoEnvio);
+        if (peso > 10) {
+            tarifa *= 1.2;
+        }
+        return "Tarifa con recargo: " + tarifa;
     }
 }
