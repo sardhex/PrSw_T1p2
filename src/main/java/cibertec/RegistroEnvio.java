@@ -13,9 +13,6 @@ public class RegistroEnvio {
 
     public String registrar(String codigoEnvio, double peso, double dimensiones, String direccion, String tipoEnvio,
             double distancia) {
-        if (zonaService.esZonaRestringida(direccion)) {
-            return "No se permiten envíos a esta zona";
-        }
         double tarifaFinal = calcularTarifaConRecargo(peso, distancia, tipoEnvio);
         return "Tarifa con recargo: " + tarifaFinal;
     }

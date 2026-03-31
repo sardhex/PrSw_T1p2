@@ -39,4 +39,15 @@ public class RegistroEnvioTest {
 
         assertEquals("Tarifa con recargo: 120.0", result);
     }
+
+    @Test
+    @DisplayName("should return an error if the zone is restricted.")
+    void shouldReturnErrorWhenZoneIsRestricted() {
+        String direccion = "Av. Restringida 456";
+        when(zonaService.esZonaRestringida(direccion)).thenReturn(true);
+
+        String result = registroEnvio.registrar("E002", 5.0, 30.0, direccion, "Estándar", 50.0);
+
+        assertEquals("No se permiten envíos a esta zona", result);
+    }
 }
